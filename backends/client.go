@@ -4,16 +4,17 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/kelseyhightower/confd/backends/consul"
-	"github.com/kelseyhightower/confd/backends/dynamodb"
-	"github.com/kelseyhightower/confd/backends/env"
-	"github.com/kelseyhightower/confd/backends/etcd"
-	"github.com/kelseyhightower/confd/backends/rancher"
-	"github.com/kelseyhightower/confd/backends/redis"
-	"github.com/kelseyhightower/confd/backends/stackengine"
-	"github.com/kelseyhightower/confd/backends/vault"
-	"github.com/kelseyhightower/confd/backends/zookeeper"
-	"github.com/kelseyhightower/confd/log"
+	"github.com/jburgess46/confd/backends/consul"
+	"github.com/jburgess46/confd/backends/dynamodb"
+	"github.com/jburgess46/confd/backends/env"
+	"github.com/jburgess46/confd/backends/etcd"
+	"github.com/jburgess46/confd/backends/rancher"
+	"github.com/jburgess46/confd/backends/api"
+	"github.com/jburgess46/confd/backends/redis"
+	"github.com/jburgess46/confd/backends/stackengine"
+	"github.com/jburgess46/confd/backends/vault"
+	"github.com/jburgess46/confd/backends/zookeeper"
+	"github.com/jburgess46/confd/log"
 )
 
 // The StoreClient interface is implemented by objects that can retrieve
@@ -43,6 +44,8 @@ func New(config Config) (StoreClient, error) {
 		return zookeeper.NewZookeeperClient(backendNodes)
 	case "rancher":
 		return rancher.NewRancherClient(backendNodes)
+	case "api":
+		return api.NewAPIClient(backendNodes)
 	case "redis":
 		return redis.NewRedisClient(backendNodes, config.ClientKey)
 	case "env":
